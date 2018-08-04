@@ -1,21 +1,27 @@
-## 博客更新指南
+# `embedded-in-rust`
 
-1. clone 仓库到本地
-2. 在_posts目录下新建文章，如``2016-3-8-tmall-test.md``，可以参考其他文章。
+This is the "source code" of my blog.
+
+## Building
+
+You can spin up a local instance of my blog using [hugo].
+
+[hugo]: https://gohugo.io
 
 ```
----
-layout: post
-title: 标题
-categories: [分类]
-tags: [标签]
-fullview: true
----
-
-# 正文
+$ hugo server
 ```
 
-## 反馈
+## License
 
-1. 有问题联系maisui99@gmail.com
-2. 内部专用
+Licensed under the
+
+- Creative Commons Attribution 4.0 License
+  ([LICENSE-CC-BY-4.0](LICENSE-CC-BY-4.0) or
+  https://creativecommons.org/licenses/by/4.0/legalcode.txt)
+
+### Contribution
+
+Unless you explicitly state otherwise, any contribution intentionally submitted
+for inclusion in the work by you shall be licensed as above, without any
+additional terms or conditions.
