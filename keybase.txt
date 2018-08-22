@@ -1,0 +1,55 @@
+==================================================================
+https://keybase.io/chefkoch
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am chefkoch (https://keybase.io/chefkoch) on keybase.
+  * I have a public key with fingerprint 08E #fixme
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "jujju",
+      "fingerprint": "nzuj",
+      "host": "keybase.io",
+      "key_id": "-ü",
+      "kid": "öpä",
+      "uid": "loö",
+      "username": "chefkoch"
+    },
+    "service": {
+      "hostname": "www.dty717.github.io",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "ctime": ,i,
+  "expire_in": li,
+  "prev": "li",
+  "seqno": 21,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.77
+Comment: https://keybase.io/crypto
+
+fixme
+
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/chefkoch
+
+==================================================================
+
+Fixme:
+* Create new keys

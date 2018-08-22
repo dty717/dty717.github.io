@@ -1,10 +1,12 @@
+# .travis.yml
+# This file should be at the root of your project
+language: ruby
+cache: bundler
 script:
-  - bash deploy.sh
-
+  - bundle exec jekyll algolia
 branches:
   only:
+    # Change this to gh-pages if you're deploying using the gh-pages branch
     - master
-
-notifications:
-  email:
-    on_success: never
+rvm:
+ - 2.4
