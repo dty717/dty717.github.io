@@ -7,9 +7,11 @@ comments: true
 categories: [decomplie, ida, Security]
 ---
 关于如何解构运行在windows上的exe文件:<a href="https://msdn.microsoft.com/en-us/library/ms809762.aspx">https://msdn.microsoft.com/en-us/library/ms809762.aspx</a>
-
+<br>
+过段时间我准备系统的学习理解汇编语言
 <br>
 -------
 <br>
-
+I will learn assembly language deeply soon after.
+<br>
 resource about the decompiling of the exe in windows:<a href="https://msdn.microsoft.com/en-us/library/ms809762.aspx">https://msdn.microsoft.com/en-us/library/ms809762.aspx</a>
