@@ -1,6 +1,7 @@
 function makeLine(x,y,r,ctx,image,_paintX,_paintY){
     var paintX=[];
     var paintY=[];
+	var colors=[];
 	var mark=1;
     for(var i=x-r;i<x+r;i++){
         var start=-1;
@@ -17,8 +18,10 @@ function makeLine(x,y,r,ctx,image,_paintX,_paintY){
 					if(j-start>mark){
 						paintX.push(i);
 						paintY.push(start);
+						colors.push(ctx.getImageData(i, start, 1, 1).data)
 						paintX.push(i);
 						paintY.push(j);
+						colors.push(ctx.getImageData(i, j, 1, 1).data)
 					}
 					start=-1;
 				}		
@@ -38,8 +41,10 @@ function makeLine(x,y,r,ctx,image,_paintX,_paintY){
 					if(i-start>mark){
 						paintX.push(start);
 						paintY.push(j);
+						colors.push(ctx.getImageData(start, j, 1, 1).data)
 						paintX.push(i);
-						paintY.push(j);
+						paintY.push(j);					
+						colors.push(ctx.getImageData(i, j, 1, 1).data);				
 					}
 					start=-1;
 				}
@@ -51,9 +56,10 @@ function makeLine(x,y,r,ctx,image,_paintX,_paintY){
 	ctx.fillStyle='red';
 	if(image)
 		ctx.drawImage(image,0,0)
-	
 	for(var i=0;i<paintX.length;i++){
-		console.log(_paintY.indexOf(paintY[i]),_paintY.indexOf(paintY[i]))
+		//ctx.fillRect(paintX[i],paintY[i],1,1);
+		//continue;
+		//console.log(_paintY.indexOf(paintY[i]),_paintY.indexOf(paintY[i]))
 
 		if(_paintY.indexOf(paintY[i])!=_paintY.indexOf(paintY[i])){
 			continue;
@@ -91,17 +97,20 @@ function makeLine(x,y,r,ctx,image,_paintX,_paintY){
 			if(near!=-1&&(near2!=-1)){
 				var s=paintX[i]-paintX[near];
 				if(!same(paintX[i],paintY[i],paintX[near], paintY[near],paintX[near2], paintY[near2])){
-					//ctx.fillRect(paintX[i], paintY[i], 1, 1)
-					//continue;
+					ctx.beginPath();
+					ctx.strokeStyle= '#' + ((colors[i][0] << 16) | (colors[i][1] << 8) | colors[i][2]).toString(16);
 					ctx.moveTo(paintX[near], paintY[near]);
 					ctx.lineTo(paintX[i], paintY[i]);
 					ctx.lineTo(paintX[near2], paintY[near2]);
+					ctx.stroke()
+
 				}
 				//console.log(paintX[i], paintY[i],paintX[near], paintY[near],nearest)
 			}
 		}
     }
 	ctx.stroke()
+	
 }
 
 function same(x0,y0,x1,y1,x2,y2){
