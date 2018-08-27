@@ -57,8 +57,10 @@ function makeLine(x,y,r,ctx,image,_paintX,_paintY){
 	if(image)
 		ctx.drawImage(image,0,0)
 	for(var i=0;i<paintX.length;i++){
-		//ctx.fillRect(paintX[i],paintY[i],1,1);
-		//continue;
+		ctx.fillStyle= '#' + ((colors[i][0] << 16) | (colors[i][1] << 8) | colors[i][2]).toString(16);
+		ctx.fillRect(paintX[i],paintY[i],1,1);
+		
+		continue;
 		//console.log(_paintY.indexOf(paintY[i]),_paintY.indexOf(paintY[i]))
 
 		if(_paintY.indexOf(paintY[i])!=_paintY.indexOf(paintY[i])){
