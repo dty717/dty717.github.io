@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Page Title</title>
+<style>
+	.block{
+		border: 3px solid #73AD21;
+		position: absolute;
+		width: 60px;
+		height: 180px;
+	}
+	.block-board{
+		border: 3px solid black;
+		position: absolute;
+		width: 80px;
+		height: 80px;
+	}
+	
+	#DIDING{
+		border: 3px solid black;
+		position: absolute;
+		width: 250px;
+		height: 350px;
+		
+	}
+	.block-pin{
+		border: 1px solid black;
+		position: absolute;
+		width: 20px;
+		height: 20px;
+	}
+	#A1{
+		top:200px;
+		left: 200px
+	}
+	#B1{
+		top:180px;
+		left: 200px
+	}
+	#A2{
+		top:160px;
+		left: 200px
+	}
+	#B2{
+		top:140px;
+		left: 200px
+	}
+	#_24V_1{
+		top:90px;
+		left: 200px
+	}
+	#_24V_2{
+		top:70px;
+		left: 200px
+	}
+	#GND_1{
+		top:50px;
+		left: 200px
+	}
+	#GND_2{
+		top: 30px;
+		left: 200px
+	}
+	#_1_minus{
+		top: 30px;
+		left: 60px
+	}
+	#_1_plus{
+		top: 30px;
+		left: 80px
+	}
+	#_2_minus{
+		top: 30px;
+		left: 100px
+	}
+	#_2_plus{
+		top: 30px;
+		left: 120px
+	}
+	#O{
+		top: 310px;
+		left: 100px
+	}
+	#V{
+		top: 310px;
+		left: 80px
+	}
+	#G{
+		top: 310px;
+		left: 60px
+	}
+</style>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<div class="controller" id="DIDING">
+	DIDING
+	<div id="A1" class="block-pin">A1</div>
+	<div id="B1" class="block-pin">B1</div>
+	<div id="A2" class="block-pin">A2</div>
+	<div id="B2" class="block-pin">B2</div>
+	
+	<div id="_24V_1" class="block-pin">24V</div>
+	<div id="_24V_2" class="block-pin">24V</div>
+	<div id="GND_1" class="block-pin">GND</div>
+	<div id="GND_2" class="block-pin">GND</div>
+
+	<div id="O" class="block-pin">O</div>
+	<div id="V" class="block-pin">V</div>
+	<div id="G" class="block-pin">G</div>
+	
+	<div id="_2_plus" class="block-pin">2+</div>
+	<div id="_2_minus" class="block-pin">2-</div>
+	<div id="_1_plus" class="block-pin">1+</div>
+	<div id="_1_minus" class="block-pin">1-</div>
+
+</div>
+
+
+
+<script>
+	
+	var links=new Map();
+	var left=0;
+	var right=1;
+	links.set("A1", p(4,"主控板(A2)右边第六个脚"));
+	links.set("B1", p(4,"主控板(B2)右边第五个脚"));
+	links.set("A2", p(3,"#1板右侧第四脚"));
+	links.set("B2", p(2,"#1板右侧第三脚"));
+	
+	links.set("_24V_1", p(1,"主箱体电源24V+"));
+	links.set("_24V_2", p(1,"主控板24V"));
+	links.set("GND_1", p(7,"主箱体电源24V-"));
+	links.set("GND_2", p(2,"主控板GND\n1+\n2+"));
+	links.set("_2_minus", p(1,"电磁阀V7黑负"));
+	links.set("_1_minus", p(1,"P5风扇黑负"));
+
+	links.set("O", p(7,"NI的AI 1(AI 1+)"));
+	links.set("G", p(7,"NI的AI GND"));
+
+	function p(num,l){
+		var obj={};
+		obj.id="Bd"+num;
+		if(Number.isInteger(l))
+			obj.dir=(l==0)?"左":"右";
+		else
+			obj.dir=l;
+		return obj;
+	}
+	function match(obj){
+		var o=links.get(obj);
+		//$("#"+o.id).css('background-color', 'red');
+		setTimeout(
+			function(){
+				//$("#"+o.id).css('background-color', '');
+				alert(o.dir)
+			}, 200);
+	}
+	$(".block-pin").click(function(event){
+		match(this.id)
+	})
+	
+	
+	
+</script>
+</body>
+</html>

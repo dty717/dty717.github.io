@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Page Title</title>
+<style>
+	.block{
+		border: 3px solid #73AD21;
+		position: absolute;
+		width: 20px;
+		height: 180px;
+	}
+	.block-board{
+		border: 3px solid black;
+		position: absolute;
+		width: 80px;
+		height: 80px;
+	}
+	
+	#DIDING{
+		border: 3px solid black;
+		position: absolute;
+		width: 350px;
+		height: 350px;
+		
+	}
+	.block-pin{
+		border: 1px solid black;
+		position: absolute;
+		width: 20px;
+		height: 20px;
+	}
+	#G_1{
+		top: 20px;
+		left: 10px
+	}
+	#V_1{
+		top: 40px;
+		left: 10px
+	}
+	#O_1{
+		top: 60px;
+		left: 10px
+	}
+	#G_2{
+		top: 100px;
+		left: 10px
+	}
+	#V_2{
+		top: 120px;
+		left: 10px
+	}
+	#O_2{
+		top: 140px;
+		left: 10px
+	}
+	#G_3{
+		top: 180px;
+		left: 10px
+	}
+	#V_3{
+		top: 200px;
+		left: 10px
+	}
+	#O_3{
+		top: 220px;
+		left: 10px
+	}
+	#G_4{
+		top: 260px;
+		left: 10px
+	}
+	#V_4{
+		top: 280px;
+		left: 10px
+	}
+	#O_4{
+		top: 300px;
+		left: 10px
+	}
+	#ENA1{
+		top: 320px;
+		left: 40px
+	}
+	#_plus_5V_1_1{
+		top: 320px;
+		left: 60px
+	}
+	#DIR1{
+		top: 320px;
+		left: 80px
+	}
+	#_plus_5V_1_2{
+		top: 320px;
+		left: 100px
+	}
+	#PUL1{
+		top: 320px;
+		left: 120px
+	}
+	#_plus_5V_1_3{
+		top: 320px;
+		left: 140px
+	}
+	#ENA2{
+		top: 320px;
+		left: 180px
+	}
+	#_plus_5V_2_1{
+		top: 320px;
+		left: 200px
+	}
+	#DIR2{
+		top: 320px;
+		left: 220px
+	}
+	#_plus_5V_2_2{
+		top: 320px;
+		left: 240px
+	}
+	#PUL2{
+		top: 320px;
+		left: 260px
+	}
+	#_plus_5V_2_3{
+		top: 320px;
+		left: 280px
+	}
+	#VIN{
+		top: 20px;
+		left: 320px
+	}
+	#GND_1{
+		top: 40px;
+		left: 320px
+	}
+	#B{
+		top: 60px;
+		left: 320px
+	}
+	#A{
+		top: 80px;
+		left: 320px
+	}
+	#GND_2_1{
+		top: 120px;
+		left: 320px
+	}
+	#_24V_1{
+		top: 140px;
+		left: 320px
+	}
+	#GND_2_2{
+		top: 160px;
+		left: 320px
+	}
+	#_24V_2{
+		top: 180px;
+		left: 320px
+	}
+	
+</style>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<div class="controller" id="DIDING">
+	MotorCircuit
+	<div id="G_1" class="block-pin">G</div>
+	<div id="V_1" class="block-pin">V</div>
+	<div id="O_1" class="block-pin">O</div>
+	<div id="G_2" class="block-pin">G</div>
+	<div id="V_2" class="block-pin">V</div>
+	<div id="O_2" class="block-pin">O</div>
+	<div id="G_3" class="block-pin">G</div>
+	<div id="V_3" class="block-pin">V</div>
+	<div id="O_3" class="block-pin">O</div>
+	<div id="G_4" class="block-pin">G</div>
+	<div id="V_4" class="block-pin">V</div>
+	<div id="O_4" class="block-pin">O</div>
+	
+	<div id="ENA1" class="block-pin">E1</div>
+	<div id="_plus_5V_1_1" class="block-pin">+5</div>
+	<div id="DIR1" class="block-pin">D1</div>
+	<div id="_plus_5V_1_2" class="block-pin">+5</div>
+	<div id="PUL1" class="block-pin">P1</div>
+	<div id="_plus_5V_1_3" class="block-pin">+5</div>
+	
+	<div id="ENA2" class="block-pin">E2</div>
+	<div id="_plus_5V_2_1" class="block-pin">+5</div>
+	<div id="DIR2" class="block-pin">D2</div>
+	<div id="_plus_5V_2_2" class="block-pin">+5</div>
+	<div id="PUL2" class="block-pin">P2</div>
+	<div id="_plus_5V_2_3" class="block-pin">+5</div>
+
+	<div id="VIN" class="block-pin">VIN</div>
+	<div id="GND_1" class="block-pin">GND</div>
+	<div id="B" class="block-pin">B</div>
+	<div id="A" class="block-pin">A</div>
+	
+	<div id="GND_2_1" class="block-pin">GND</div>
+	<div id="_24V_1" class="block-pin">24V</div>
+	<div id="GND_2_2" class="block-pin">GND</div>
+	<div id="_24V_2" class="block-pin">24V</div>
+
+</div>
+
+
+
+<script>
+	
+	var links=new Map();
+	var left=0;
+	var right=1;
+	links.set("G_2", p(4,"P5(G)"));
+	links.set("V_2", p(4,"P5(V)"));
+	links.set("O_2", p(3,"P5(O)"));	
+	links.set("VIN", p(1,"#7板右边第一脚\n主箱体电源24V+"));
+	links.set("GND_1", p(1,"#7板右边第二脚\n主箱体电源24V-"));
+	links.set("B", p(7,"滴定板右边第五脚"));
+	links.set("A", p(2,"滴定板右边第六脚"));
+	links.set("_2_minus", p(1,"电磁阀V7黑负"));
+	links.set("_1_minus", p(1,"P5风扇黑负"));
+
+	links.set("O", p(7,"NI的AI 1(AI 1+)"));
+	links.set("G", p(7,"NI的AI GND"));
+
+	function p(num,l){
+		var obj={};
+		obj.id="Bd"+num;
+		if(Number.isInteger(l))
+			obj.dir=(l==0)?"左":"右";
+		else
+			obj.dir=l;
+		return obj;
+	}
+	function match(obj){
+		var o=links.get(obj);
+		//$("#"+o.id).css('background-color', 'red');
+		setTimeout(
+			function(){
+				//$("#"+o.id).css('background-color', '');
+				alert(o.dir)
+			}, 200);
+	}
+	$(".block-pin").click(function(event){
+		match(this.id)
+	})
+	
+	
+	
+</script>
+</body>
+</html>

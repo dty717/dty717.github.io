@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Page Title</title>
+<style>
+	.block{
+		border: 3px solid #73AD21;
+		position: absolute;
+		width: 60px;
+		height: 180px;
+	}
+	.block-board{
+		border: 3px solid black;
+		position: absolute;
+		width: 80px;
+		height: 80px;
+	}
+	
+	#main{
+		border: 3px solid black;
+		position: absolute;
+		width: 250px;
+		height: 350px;
+		
+	}
+	.block-pin{
+		border: 1px solid black;
+		position: absolute;
+		width: 20px;
+		height: 20px;
+	}
+	#M1{
+		top: 20px;
+		left: 20px;
+	}
+	
+	#M2{
+		top: 20px;
+		left: 90px;
+	}
+	
+	#M3{
+		top: 20px;
+		left: 160px;
+	}
+	
+	#P1{
+		top: 20px;
+		left: 230px;
+	}
+	
+	#M4{
+		top: 220px;
+		left: 20px;
+	}
+	
+	#P5{
+		top: 220px;
+		left: 90px;
+	}
+	
+	#P4{
+		top: 220px;
+		left: 160px;
+	}
+	
+	#V3{
+		top: 220px;
+		left: 230px;
+	}
+	#Bd4{
+		top:20px;
+		left:330px
+	}
+	#Bd3{
+		top:120px;
+		left:330px
+	}
+	#Bd2{
+		top:220px;
+		left:330px
+	}
+	#Bd7{
+		top:210px;
+		left:330px
+	}
+	#Bd1{
+		top:420px;
+		left:330px
+	}
+	#B4{
+		top:3px;
+		left:210px
+	}
+	#A4{
+		top:23px;
+		left:210px
+	}
+	#B3{
+		top:43px;
+		left:210px
+	}
+	#A3{
+		top:63px;
+		left:210px
+	}
+	#B2{
+		top:91px;
+		left:210px
+	}
+	#A2{
+		top:111px;
+		left:210px
+	}
+	#B1{
+		top:131px;
+		left:210px
+	}
+	#A1{
+		top:151px;
+		left:210px
+	}
+	#COM{
+		top:179px;
+		left:210px
+	}
+	#IN1{
+		top:199px;
+		left:210px
+	}
+	#IN0{
+		top:219px;
+		left:210px
+	}
+	#NC{
+		top:239px;
+		left:210px
+	}
+	#_2_minus{
+		top:267px;
+		left:210px
+	}
+	#_2_plus{
+		top:287px;
+		left:210px
+	}
+	#_1_minus{
+		top:307px;
+		left:210px
+	}
+	#_1_plus{
+		top:327px;
+		left:210px
+	}
+	#FAN_plus{
+		top:267px;
+		left:10px
+	}
+	#FAN_minus{
+		top:287px;
+		left:10px
+	}
+	#_24V{
+		top:307px;
+		left:10px
+	}
+	#GND{
+		top:327px;
+		left:10px
+	}
+	
+</style>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<div class="controller" id="main">
+	MAIN
+	<div id="B4" class="block-pin">B4</div>
+	<div id="A4" class="block-pin">A4</div>
+	<div id="B3" class="block-pin">B3</div>
+	<div id="A3" class="block-pin">A3</div>
+	
+	<div id="B2" class="block-pin">B2</div>
+	<div id="A2" class="block-pin">A2</div>
+	<div id="B1" class="block-pin">B1</div>
+	<div id="A1" class="block-pin">A1</div>
+
+	<div id="COM" class="block-pin">COM</div>
+	<div id="IN1" class="block-pin">IN1</div>
+	<div id="IN0" class="block-pin">IN0</div>
+	<div id="NC" class="block-pin">NC</div>
+	
+	<div id="_2_minus" class="block-pin">2-</div>
+	<div id="_2_plus" class="block-pin">2+</div>
+	<div id="_1_minus" class="block-pin">1-</div>
+	<div id="_1_plus" class="block-pin">1+</div>
+	
+	<div id="FAN_plus" class="block-pin">FAN+</div>
+	<div id="FAN_minus" class="block-pin">FAN-</div>
+	<div id="_24V" class="block-pin">24V</div>
+	<div id="GND" class="block-pin">GND</div>
+	
+</div>
+
+
+
+<script>
+	
+	var links=new Map();
+	var left=0;
+	var right=1;
+	links.set("B4", p(4,"#7右边第三脚(B)"));
+	links.set("A4", p(4,"#7右边第四脚(A)"));
+	links.set("B3", p(3,"主箱体航空插头第一层黄线"));
+	links.set("A3", p(2,"主箱体航空插头第一层红线"));
+	links.set("B2", p(1,"滴定板右侧第七个脚"));
+	links.set("A2", p(1,"滴定板右侧第八个脚"));
+	links.set("B1", p(7,"RS232接口B"));
+	links.set("A1", p(2,"RS232接口A"));
+	links.set("COM", p(4,left));
+	links.set("IN1", p(4,right));
+	links.set("IN0", p(3,right));
+	links.set("NC", p(2,left));
+	links.set("_2_minus", p(1,right));
+	links.set("_2_plus", p(1,left));
+	links.set("_1_minus", p(7,"P1风扇红线正"));
+	links.set("_1_plus", p(2,"主控板24V 左边第三个脚"));
+	links.set("FAN_plus", p(1,"电磁阀V2红正"));
+	links.set("FAN_minus", p(1,"电磁阀V2黑负"));
+	links.set("_24V", p(7,"滴定板24V右侧第三个脚"));
+	links.set("GND", p(2,"滴定板GND右侧第一个脚  \nP1风扇黑负\n主箱体航空第二层单独的黑\nRS232接口GND"));
+	function p(num,l){
+		var obj={};
+		obj.id="Bd"+num;
+		if(Number.isInteger(l))
+			obj.dir=(l==0)?"左":"右";
+		else
+			obj.dir=l;
+		return obj;
+	}
+	function match(obj){
+		var o=links.get(obj);
+		//$("#"+o.id).css('background-color', 'red');
+		setTimeout(
+			function(){
+				//$("#"+o.id).css('background-color', '');
+				alert(o.dir)
+			}, 200);
+	}
+	$(".block-pin").click(function(event){
+		match(this.id)
+	})
+	
+	
+	
+</script>
+</body>
+</html>

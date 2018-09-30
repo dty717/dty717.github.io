@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Page Title</title>
+<style>
+	.block{
+		border: 3px solid #73AD21;
+		position: absolute;
+		width: 60px;
+		height: 180px;
+	}
+	.block-board{
+		border: 3px solid black;
+		position: absolute;
+		width: 80px;
+		height: 80px;
+	}
+	#M1{
+		top: 20px;
+		left: 20px;
+	}
+	
+	#M2{
+		top: 20px;
+		left: 90px;
+	}
+	
+	#M3{
+		top: 20px;
+		left: 160px;
+	}
+	
+	#P1{
+		top: 20px;
+		left: 230px;
+	}
+	
+	#M4{
+		top: 220px;
+		left: 20px;
+	}
+	
+	#P5{
+		top: 220px;
+		left: 90px;
+	}
+	
+	#P4{
+		top: 220px;
+		left: 160px;
+	}
+	
+	#V3{
+		top: 220px;
+		left: 230px;
+	}
+	#B4{
+		top:20px;
+		left:330px
+	}
+	#B3{
+		top:120px;
+		left:330px
+	}
+	#B2{
+		top:220px;
+		left:330px
+	}
+	#B7{
+		top:320px;
+		left:330px
+	}
+	#B1{
+		top:420px;
+		left:330px
+	}
+</style>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<div class="motor">
+<div id="M1" class="block">M1</div>
+<div id="M2" class="block">M2</div>
+<div id="M3" class="block">M3</div>
+<div id="P1" class="block">P1</div>
+
+<div id="M4" class="block">M4</div>
+<div id="P5" class="block">P5</div>
+<div id="P4" class="block">P4</div>
+<div id="V3" class="block">V3</div>
+</div>
+<div>
+<div id="B4" class="block-board">#4</div>
+<div id="B3" class="block-board">#3</div>
+<div id="B2" class="block-board">#2</div>
+<div id="B7" class="block-board">#7</div>
+<div id="B1" class="block-board">#1</div>
+</div>
+<script>
+	var links=new Map();
+	var left=0;
+	var right=1;
+	links.set("M1", p(4,left));
+	links.set("M2", p(4,right));
+	links.set("M3", p(3,right));
+	links.set("P1", p(2,left));
+	links.set("M4", p(1,right));
+	links.set("P5", p(1,left));
+	links.set("P4", p(7,right));
+	links.set("V3", p(2,right));
+	function p(num,l){
+		var obj={};
+		obj.id="B"+num;
+		obj.dir=(l==0)?"左":"右";
+		return obj;
+	}
+	function match(obj){
+		var o=links.get(obj);
+		$("#"+o.id).css('background-color', 'red');
+		setTimeout(function(){$("#"+o.id).css('background-color', '');alert(o.dir)}, 2000);
+	}
+	$(".block").click(function(event){
+		match(this.id)
+	})
+	
+	
+	
+</script>
+</body>
+</html>

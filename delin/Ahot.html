@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Page Title</title>
+<style>
+	.block{
+		border: 3px solid #73AD21;
+		position: absolute;
+		width: 60px;
+		height: 180px;
+	}
+	.block-board{
+		border: 3px solid black;
+		position: absolute;
+		width: 80px;
+		height: 80px;
+	}
+	
+	#main{
+		border: 3px solid black;
+		position: absolute;
+		width: 550px;
+		height: 250px;
+		
+	}
+	.block-pin{
+		border: 1px solid black;
+		position: absolute;
+		width: 20px;
+		height: 20px;
+	}
+	#_1_minus{
+		top:30px;
+		left:10px
+	}
+	#_1_plus{
+		top:50px;
+		left:10px
+	}
+	#_2_minus{
+		top:70px;
+		left:10px
+	}
+	#_2_plus{
+		top:90px;
+		left:10px
+	}
+	
+	#GND_1{
+		-webkit-transform: rotate(-90deg);
+		-moz-transform: rotate(-90deg);
+		-o-transform: rotate(-90deg);
+		-ms-transform: rotate(-90deg);
+		transform: rotate(-90deg);
+		top:10px;
+		left:60px
+	}
+	#B{
+		-webkit-transform: rotate(-90deg);
+		-moz-transform: rotate(-90deg);
+		-o-transform: rotate(-90deg);
+		-ms-transform: rotate(-90deg);
+		transform: rotate(-90deg);
+		top:10px;
+		left:80px
+	}
+	#A{
+		-webkit-transform: rotate(-90deg);
+		-moz-transform: rotate(-90deg);
+		-o-transform: rotate(-90deg);
+		-ms-transform: rotate(-90deg);
+		transform: rotate(-90deg);
+		top:10px;
+		left:100px
+	}
+	#GND_2{
+		-webkit-transform: rotate(-90deg);
+		-moz-transform: rotate(-90deg);
+		-o-transform: rotate(-90deg);
+		-ms-transform: rotate(-90deg);
+		transform: rotate(-90deg);
+		top:10px;
+		left:120px
+	}
+	#GND_3{
+		top:30px;
+		left:510px
+	}
+	#GND_4{
+		top:50px;
+		left:510px
+	}
+	#GND_5{
+		top:70px;
+		left:510px
+	}
+	#GND_6{
+		top:90px;
+		left:510px
+	}
+	#_24V_1{
+		top:120px;
+		left:510px
+	}
+	#_24V_2{
+		top:140px;
+		left:510px
+	}
+	#_24V_3{
+		top:160px;
+		left:510px
+	}
+	#_24V_4{
+		top:180px;
+		left:510px
+	}
+	
+	
+</style>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<div class="controller" id="main">
+	消解板A
+	<div id="_1_minus" class="block-pin">1-</div>
+	<div id="_1_plus" class="block-pin">1+</div>
+	<div id="_2_minus" class="block-pin">2-</div>
+	<div id="_2_plus" class="block-pin">2+</div>
+
+	<div id="GND_1" class="block-pin">GND</div>
+	<div id="B" class="block-pin">B</div>
+	<div id="A" class="block-pin">A</div>
+	<div id="GND_2" class="block-pin">GND</div>
+	
+	<div id="GND_3" class="block-pin">GND</div>
+	<div id="GND_4" class="block-pin">GND</div>
+	<div id="GND_5" class="block-pin">GND</div>
+	<div id="GND_6" class="block-pin">GND</div>
+	
+	<div id="_24V_1" class="block-pin">24V</div>
+	<div id="_24V_2" class="block-pin">24V</div>
+	<div id="_24V_3" class="block-pin">24V</div>
+	<div id="_24V_4" class="block-pin">24V</div>
+</div>
+
+
+
+<script>
+	
+	var links=new Map();
+	var left=0;
+	var right=1;
+	links.set("_1_minus", p(7,"A组冷却风扇红线正"));
+	links.set("_1_plus", p(2,"A组消解板右边第五脚"));
+	links.set("_2_minus", p(1,"A组水泵接口2"));
+	links.set("_2_plus", p(1,"A组开关电源N"));
+	links.set("GND_1", p(4,"A组冷却风扇黑负\nA组航空插头黑线3"));
+	links.set("B", p(3,"A组航空插头蓝线2\nA组航空插头白线5"));
+	links.set("A", p(2,"A组航空插头红线1\nA组航空插头黄线4"));
+	//links.set("GND_2", p(1,""));
+	//links.set("GND_3", p(1,"滴定板右侧第八个脚"));
+	links.set("GND_4", p(7,"A组开关电源GND"));
+	links.set("GND_5", p(2,"A组开关电源GND"));
+	links.set("GND_6", p(4,"A组开关电源GND"));
+	links.set("_24V_2", p(4,"A组开关电源24V"));
+	links.set("_24V_3", p(3,"A组开关电源24V"));
+	links.set("_24V_4", p(2,"A组开关电源24V"));
+
+	function p(num,l){
+		var obj={};
+		obj.id="Bd"+num;
+		if(Number.isInteger(l))
+			obj.dir=(l==0)?"左":"右";
+		else
+			obj.dir=l;
+		return obj;
+	}
+	function match(obj){
+		var o=links.get(obj);
+		//$("#"+o.id).css('background-color', 'red');
+		setTimeout(
+			function(){
+				//$("#"+o.id).css('background-color', '');
+				alert(o.dir)
+			}, 200);
+	}
+	$(".block-pin").click(function(event){
+		match(this.id)
+	})
+	
+	
+	
+</script>
+</body>
+</html>
