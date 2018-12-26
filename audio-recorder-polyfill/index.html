@@ -1,340 +1,240 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8">
-    <title>Media Recorder Polyfill</title>
-    <link rel="shortcut icon" href="./favicon.ico">
-    <meta content="width=device-width" name="viewport">
-    <meta name="theme-color" content="#00e5d2">
-    <script>
-        if (!window.MediaRecorder || /^\?polyfill/.test(location.search)) {
-            document.write(decodeURI('%3Cscript src="./polyfill.js">%3C/script>'))
-        }
-    </script>
-    <style>
-        * {
-            padding: 0;
-            margin: 0
-        }
-        
-        a {
-            color: #009387
-        }
-        
-        a:visited {
-            color: #930087
-        }
-        
-        body {
-            margin: 1rem;
-            font-family: sans-serif
-        }
-        
-        article {
-            max-width: 28rem;
-            margin: 0 auto;
-            position: relative
-        }
-        
-        #controls {
-            display: flex;
-            margin-top: 2rem
-        }
-        
-        button {
-            flex-grow: 1;
-            height: 2.5rem;
-            min-width: 2rem;
-            border: none;
-            border-radius: .15rem;
-            background: #00e5d2;
-            margin-left: 2px;
-            box-shadow: inset 0 -.15rem 0 rgba(0, 0, 0, .2);
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center
-        }
-        
-        button:focus,
-        button:hover {
-            outline: 0;
-            background: #00ffe9
-        }
-        
-        button::-moz-focus-inner {
-            border: 0
-        }
-        
-        button:active {
-            box-shadow: inset 0 1px 0 rgba(0, 0, 0, .2);
-            line-height: 3rem
-        }
-        
-        button:disabled {
-            pointer-events: none;
-            background: #d3d3d3
-        }
-        
-        button:first-child {
-            margin-left: 0
-        }
-        
-        button svg {
-            transform: translateY(-.05rem);
-            fill: #000;
-            width: 1.4rem
-        }
-        
-        button:active svg {
-            transform: translateY(0)
-        }
-        
-        button:disabled svg {
-            fill: #9a9a9a
-        }
-        
-        button text {
-            fill: #00e5d2
-        }
-        
-        button:focus text,
-        button:hover text {
-            fill: #00ffe9
-        }
-        
-        button:disabled text {
-            fill: #d3d3d3
-        }
-        
-        #formats,
-        #mode {
-            margin-top: .5rem;
-            font-size: 80%
-        }
-        
-        #mode {
-            float: right
-        }
-        
-        #support {
-            display: none;
-            margin-top: 2rem;
-            color: red;
-            font-weight: 700
-        }
-        
-        #list {
-            margin-top: 1.6rem
-        }
-        
-        audio {
-            display: block;
-            width: 100%;
-            margin-top: .2rem
-        }
-        
-        li {
-            list-style: none;
-            margin-bottom: 1rem
-        }
-    </style>
-</head>
-
-<body>
-    <article>
-        <p><a href="https://github.com/ai/audio-recorder-polyfill">Audio Recorder Polyfill</a> isÂ aÂ MediaRecorder polyfill toÂ recordÂ audio in Edge and Safari. See <a href="./api/MediaRecorder.html">API</a>.</p>
-        <div id="controls">
-            <button id="record" disabled="disabled" autocomplete="off" title="Record">
-                <svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="46" />
-                    <svg></svg>
-                </svg>
-            </button>
-            <button id="sec" disabled="disabled" autocomplete="off" title="Record by 1 second">
-                <svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="46" />
-                    <text x="26" y="64" font-size="45">1s</text>
-                    <svg></svg>
-                </svg>
-            </button>
-            <button id="pause" disabled="disabled" autocomplete="off" title="Pause">
-                <svg viewBox="0 0 100 100">
-                    <rect x="14" y="10" width="25" height="80" />
-                    <rect x="62" y="10" width="25" height="80" />
-                    <svg></svg>
-                </svg>
-            </button>
-            <button id="resume" disabled="disabled" autocomplete="off" title="Resume">
-                <svg viewBox="0 0 100 100">
-                    <polygon points="10,10 90,50 10,90" />
-                    <svg></svg>
-                </svg>
-            </button>
-            <button id="stop" autocomplete="off" disabled="disabled" title="Stop">
-                <svg viewBox="0 0 100 100">
-                    <rect x="12" y="12" width="76" height="76"></rect>
-                    <svg></svg>
-                </svg>
-            </button>
-            <button id="request" autocomplete="off" disabled="disabled" title="Request data">
-                <svg viewBox="0 0 100 100">
-                    <polygon points="10,10 90,10 50,90" />
-                    <svg></svg>
-                </svg>
-            </button>
-        </div>
-        <div id="mode">Native support, <a href="?polyfill">force polyfill</a></div>
-        <div id="formats"></div>
-        <div id="support">Your browser doesnât support MediaRecorder orÂ WebRTC to be able to polyfill MediaRecorder.</div>
-        <ul id="list"></ul>
-    </article>
+    <head>
+        <meta charset="UTF-8">
+        <title>Media Recorder Polyfill</title>
+        <link rel="shortcut icon" href="./favicon.ico">
+        <meta content="width=device-width" name="viewport">
+        <meta name="theme-color" content="#00e5d2">
+        <script>
+            if (!window.MediaRecorder || /^\?polyfill/.test(location.search)) {
+                document.write(decodeURI('%3Cscript src="./polyfill.js">%3C/script>'))
+            }
+        </script>
+        <style>
+            *{padding:0;margin:0}
+            a{color:#009387}
+            a:visited{color:#930087}
+            body{margin:1rem;font-family:sans-serif}
+            article{max-width:28rem;margin:0 auto;position:relative}
+            #controls{display:flex;margin-top:2rem}
+            button{flex-grow:1;height:2.5rem;min-width:2rem;border:none;border-radius:.15rem;background:#00e5d2;margin-left:2px;box-shadow:inset 0 -.15rem 0 rgba(0,0,0,.2);cursor:pointer;display:flex;justify-content:center;align-items:center}
+            button:focus,button:hover{outline:0;background:#00ffe9}
+            button::-moz-focus-inner{border:0}
+            button:active{box-shadow:inset 0 1px 0 rgba(0,0,0,.2);line-height:3rem}
+            button:disabled{pointer-events:none;background:#d3d3d3}
+            button:first-child{margin-left:0}
+            button svg{transform:translateY(-.05rem);fill:#000;width:1.4rem}
+            button:active svg{transform:translateY(0)}
+            button:disabled svg{fill:#9a9a9a}
+            button text{fill:#00e5d2}
+            button:focus text,button:hover text{fill:#00ffe9}
+            button:disabled text{fill:#d3d3d3}
+            #formats,#mode{margin-top:.5rem;font-size:80%}
+            #mode{float:right}
+            #support{display:none;margin-top:2rem;color:red;font-weight:700}
+            #list{margin-top:1.6rem}
+            audio{display:block;width:100%;margin-top:.2rem}
+            li{list-style:none;margin-bottom:1rem}
+        </style>
+    </head>
+    <body>
+        <article>
+            <p>
+                <a href="https://github.com/ai/audio-recorder-polyfill">Audio Recorder Polyfill</a> is a MediaRecorder polyfill to record audio in Edge and Safari. See <a href="./api/MediaRecorder.html">API</a>.
+            </p>
+            <div id="controls">
+                <button id="record" disabled="disabled" autocomplete="off" title="Record">
+                    <svg viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="46"/>
+                        <svg></svg>
+                    </svg>
+                </button> 
+                <button id="sec" disabled="disabled" autocomplete="off" title="Record by 1 second">
+                    <svg viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="46"/>
+                        <text x="26" y="64" font-size="45">1s</text>
+                        <svg></svg>
+                    </svg>
+                </button>
+                <button id="pause" disabled="disabled" autocomplete="off" title="Pause">
+                    <svg viewBox="0 0 100 100">
+                        <rect x="14" y="10" width="25" height="80"/>
+                        <rect x="62" y="10" width="25" height="80"/>
+                        <svg></svg>
+                    </svg>
+                </button> 
+                <button id="resume" disabled="disabled" autocomplete="off" title="Resume">
+                    <svg viewBox="0 0 100 100"><polygon points="10,10 90,50 10,90"/>
+                        <svg></svg>
+                    </svg>
+                </button>
+                <button id="stop" autocomplete="off" disabled="disabled" title="Stop">
+                    <svg viewBox="0 0 100 100">
+                        <rect x="12" y="12" width="76" height="76"></rect>
+                        <svg></svg>
+                    </svg>
+                </button>
+                <button id="request" autocomplete="off" disabled="disabled" title="Request data">
+                    <svg viewBox="0 0 100 100">
+                        <polygon points="10,10 90,10 50,90"/>
+                        <svg></svg>
+                    </svg>
+                </button>
+            </div>
+            <div id="mode">
+                Native support, <a href="?polyfill">force polyfill</a>
+            </div>
+            <div id="formats"></div>
+            <div id="support">
+                Your browser doesn’t support MediaRecorder or WebRTC to be able to polyfill MediaRecorder.
+            </div>
+            <ul id="list"></ul>
+        </article>
     <script type="text/javascript">
-        ! function(e) {
-            var t = {};
-
-            function n(r) {
-                if (t[r]) return t[r].exports;
-                var d = t[r] = {
-                    i: r,
-                    l: !1,
-                    exports: {}
-                };
-                return e[r].call(d.exports, d, d.exports, n), d.l = !0, d.exports
-            }
-            n.m = e, n.c = t, n.d = function(e, t, r) {
-                n.o(e, t) || Object.defineProperty(e, t, {
-                    enumerable: !0,
-                    get: r
-                })
-            }, n.r = function(e) {
-                "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, {
-                    value: "Module"
-                }), Object.defineProperty(e, "__esModule", {
-                    value: !0
-                })
-            }, n.t = function(e, t) {
-                if (1 & t && (e = n(e)), 8 & t) return e;
-                if (4 & t && "object" == typeof e && e && e.__esModule) return e;
-                var r = Object.create(null);
-                if (n.r(r), Object.defineProperty(r, "default", {
-                        enumerable: !0,
-                        value: e
-                    }), 2 & t && "string" != typeof e)
-                    for (var d in e) n.d(r, d, function(t) {
-                        return e[t]
-                    }.bind(null, d));
-                return r
-            }, n.n = function(e) {
-                var t = e && e.__esModule ? function() {
-                    return e.default
-                } : function() {
-                    return e
-                };
-                return n.d(t, "a", t), t
-            }, n.o = function(e, t) {
-                return Object.prototype.hasOwnProperty.call(e, t)
-            }, n.p = "/", n(n.s = 0)
-        }([function(e, t, n) {
-            var r, d, a, i, o, l, u, s, c = n(1),
-                b = ["start", "stop", "pause", "resume"],
-                p = ["audio/webm", "audio/ogg", "audio/wav"];
-
-            function m(e) {
-                d.innerHTML = "", navigator.mediaDevices.getUserMedia({
-                    audio: !0
-                }).then(function(t) {
-                    r = new MediaRecorder(t), b.forEach(function(e) {
-                        r.addEventListener(e, function(e) {
-                            var t = document.createElement("li");
-                            t.innerHTML = "<strong>" + e + ": </strong>" + r.state, "start" === e && (t.innerHTML += ", " + r.mimeType);
-                            d.appendChild(t), "recording" === r.state ? (i.disabled = !0, a.disabled = !0, s.disabled = !1, l.disabled = !0, o.disabled = !1, u.disabled = !1) : "paused" === r.state ? (i.disabled = !0, a.disabled = !0, s.disabled = !1, l.disabled = !1, o.disabled = !0, u.disabled = !1) : "inactive" === r.state && (i.disabled = !1, a.disabled = !1, s.disabled = !0, l.disabled = !0, o.disabled = !0, u.disabled = !0)
-                        }.bind(null, e))
-                    }), r.addEventListener("dataavailable", E), "full" === e ? r.start() : r.start(1e3)
-                }), i.blur(), a.blur()
-            }
-
-            function f() {
-                r.stop(), r.stream.getTracks()[0].stop(), u.blur()
-            }
-
-            function y() {
-                r.pause(), o.blur()
-            }
-
-            function v() {
-                r.resume(), l.blur()
-            }
-
-            function g() {
-                r.requestData(), s.blur()
-            }
-
-            function E(e) {
-                var t = document.createElement("li"),
-                    n = document.createElement("strong");
-                n.innerText = "dataavailable: ", t.appendChild(n);
-                var r = document.createElement("span");
-                r.innerText = e.data.type + ", " + c(e.data.size, {
-                    unitSeparator: " ",
-                    decimalPlaces: 0
-                }), t.appendChild(r);
-                var a = document.createElement("audio");
-                a.controls = !0, a.src = URL.createObjectURL(e.data), t.appendChild(a), d.appendChild(t)
-            }
-            document.addEventListener("DOMContentLoaded", function() {
-                if (d = document.getElementById("list"), i = document.getElementById("sec"), a = document.getElementById("record"), s = document.getElementById("request"), l = document.getElementById("resume"), o = document.getElementById("pause"), u = document.getElementById("stop"), MediaRecorder.notSupported) return d.style.display = "none", document.getElementById("controls").style.display = "none", document.getElementById("formats").style.display = "none", document.getElementById("mode").style.display = "none", void(document.getElementById("support").style.display = "block");
-                document.getElementById("formats").innerText = "Format: " + p.filter(function(e) {
-                    return MediaRecorder.isTypeSupported(e)
-                }).join(", "), i.addEventListener("click", m.bind(null, "parts")), a.addEventListener("click", m.bind(null, "full")), s.addEventListener("click", g), l.addEventListener("click", v), o.addEventListener("click", y), u.addEventListener("click", f), i.disabled = !1, a.disabled = !1
-            })
-        }, function(e, t, n) {
-            "use strict";
-            /*!
-             * bytes
-             * Copyright(c) 2012-2014 TJ Holowaychuk
-             * Copyright(c) 2015 Jed Watson
-             * MIT Licensed
-             */
-            e.exports = function(e, t) {
-                if ("string" == typeof e) return l(e);
-                if ("number" == typeof e) return o(e, t);
-                return null
-            }, e.exports.format = o, e.exports.parse = l;
-            var r = /\B(?=(\d{3})+(?!\d))/g,
-                d = /(?:\.0*|(\.[^0]+)0+)$/,
-                a = {
-                    b: 1,
-                    kb: 1024,
-                    mb: 1 << 20,
-                    gb: 1 << 30,
-                    tb: 1024 * (1 << 30)
-                },
-                i = /^((-|\+)?(\d+(?:\.\d+)?)) *(kb|mb|gb|tb)$/i;
-
-            function o(e, t) {
-                if (!Number.isFinite(e)) return null;
-                var n = Math.abs(e),
-                    i = t && t.thousandsSeparator || "",
-                    o = t && t.unitSeparator || "",
-                    l = t && void 0 !== t.decimalPlaces ? t.decimalPlaces : 2,
-                    u = Boolean(t && t.fixedDecimals),
-                    s = t && t.unit || "";
-                s && a[s.toLowerCase()] || (s = n >= a.tb ? "TB" : n >= a.gb ? "GB" : n >= a.mb ? "MB" : n >= a.kb ? "KB" : "B");
-                var c = (e / a[s.toLowerCase()]).toFixed(l);
-                return u || (c = c.replace(d, "$1")), i && (c = c.replace(r, i)), c + o + s
-            }
-
-            function l(e) {
-                if ("number" == typeof e && !isNaN(e)) return e;
-                if ("string" != typeof e) return null;
-                var t, n = i.exec(e),
-                    r = "b";
-                return n ? (t = parseFloat(n[1]), r = n[4].toLowerCase()) : (t = parseInt(e, 10), r = "b"), Math.floor(a[r] * t)
-            }
+        ! function (e) {
+        	var t = {};
+        
+        	function n(r) {
+        		if (t[r]) return t[r].exports;
+        		var d = t[r] = {
+        			i: r,
+        			l: !1,
+        			exports: {}
+        		};
+        		return e[r].call(d.exports, d, d.exports, n), d.l = !0, d.exports
+        	}
+        	n.m = e, n.c = t, n.d = function (e, t, r) {
+        		n.o(e, t) || Object.defineProperty(e, t, {
+        			enumerable: !0,
+        			get: r
+        		})
+        	}, n.r = function (e) {
+        		"undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, {
+        			value: "Module"
+        		}), Object.defineProperty(e, "__esModule", {
+        			value: !0
+        		})
+        	}, n.t = function (e, t) {
+        		if (1 & t && (e = n(e)), 8 & t) return e;
+        		if (4 & t && "object" == typeof e && e && e.__esModule) return e;
+        		var r = Object.create(null);
+        		if (n.r(r), Object.defineProperty(r, "default", {
+        				enumerable: !0,
+        				value: e
+        			}), 2 & t && "string" != typeof e)
+        			for (var d in e) n.d(r, d, function (t) {
+        				return e[t]
+        			}.bind(null, d));
+        		return r
+        	}, n.n = function (e) {
+        		var t = e && e.__esModule ? function () {
+        			return e.default
+        		} : function () {
+        			return e
+        		};
+        		return n.d(t, "a", t), t
+        	}, n.o = function (e, t) {
+        		return Object.prototype.hasOwnProperty.call(e, t)
+        	}, n.p = "/", n(n.s = 0)
+        }([function (e, t, n) {
+        	var r, d, a, i, o, l, u, s, c = n(1),
+        		b = ["start", "stop", "pause", "resume"],
+        		p = ["audio/webm", "audio/ogg", "audio/wav"];
+        
+        	function m(e) {
+        		d.innerHTML = "", navigator.mediaDevices.getUserMedia({
+        			audio: !0
+        		}).then(function (t) {
+        			r = new MediaRecorder(t), b.forEach(function (e) {
+        				r.addEventListener(e, function (e) {
+        					var t = document.createElement("li");
+        					t.innerHTML = "<strong>" + e + ": </strong>" + r.state, "start" === e && (t.innerHTML += ", " + r.mimeType);
+        					d.appendChild(t), "recording" === r.state ? (i.disabled = !0, a.disabled = !0, s.disabled = !1, l.disabled = !0, o.disabled = !1, u.disabled = !1) : "paused" === r.state ? (i.disabled = !0, a.disabled = !0, s.disabled = !1, l.disabled = !1, o.disabled = !0, u.disabled = !1) : "inactive" === r.state && (i.disabled = !1, a.disabled = !1, s.disabled = !0, l.disabled = !0, o.disabled = !0, u.disabled = !0)
+        				}.bind(null, e))
+        			}), r.addEventListener("dataavailable", E), "full" === e ? r.start() : r.start(1e3)
+        		}), i.blur(), a.blur()
+        	}
+        
+        	function f() {
+        		r.stop(), r.stream.getTracks()[0].stop(), u.blur()
+        	}
+        
+        	function y() {
+        		r.pause(), o.blur()
+        	}
+        
+        	function v() {
+        		r.resume(), l.blur()
+        	}
+        
+        	function g() {
+        		r.requestData(), s.blur()
+        	}
+        
+        	function E(e) {
+        		var t = document.createElement("li"),
+        			n = document.createElement("strong");
+        		n.innerText = "dataavailable: ", t.appendChild(n);
+        		var r = document.createElement("span");
+        		r.innerText = e.data.type + ", " + c(e.data.size, {
+        			unitSeparator: " ",
+        			decimalPlaces: 0
+        		}), t.appendChild(r);
+        		var a = document.createElement("audio");
+        		a.controls = !0, a.src = URL.createObjectURL(e.data), t.appendChild(a), d.appendChild(t)
+        	}
+        	document.addEventListener("DOMContentLoaded", function () {
+        		if (d = document.getElementById("list"), i = document.getElementById("sec"), a = document.getElementById("record"), s = document.getElementById("request"), l = document.getElementById("resume"), o = document.getElementById("pause"), u = document.getElementById("stop"), MediaRecorder.notSupported) return d.style.display = "none", document.getElementById("controls").style.display = "none", document.getElementById("formats").style.display = "none", document.getElementById("mode").style.display = "none", void(document.getElementById("support").style.display = "block");
+        		document.getElementById("formats").innerText = "Format: " + p.filter(function (e) {
+        			return MediaRecorder.isTypeSupported(e)
+        		}).join(", "), i.addEventListener("click", m.bind(null, "parts")), a.addEventListener("click", m.bind(null, "full")), s.addEventListener("click", g), l.addEventListener("click", v), o.addEventListener("click", y), u.addEventListener("click", f), i.disabled = !1, a.disabled = !1
+        	})
+        }, function (e, t, n) {
+        	"use strict";
+        	/*!
+        	 * bytes
+        	 * Copyright(c) 2012-2014 TJ Holowaychuk
+        	 * Copyright(c) 2015 Jed Watson
+        	 * MIT Licensed
+        	 */
+        	e.exports = function (e, t) {
+        		if ("string" == typeof e) return l(e);
+        		if ("number" == typeof e) return o(e, t);
+        		return null
+        	}, e.exports.format = o, e.exports.parse = l;
+        	var r = /\B(?=(\d{3})+(?!\d))/g,
+        		d = /(?:\.0*|(\.[^0]+)0+)$/,
+        		a = {
+        			b: 1,
+        			kb: 1024,
+        			mb: 1 << 20,
+        			gb: 1 << 30,
+        			tb: 1024 * (1 << 30)
+        		},
+        		i = /^((-|\+)?(\d+(?:\.\d+)?)) *(kb|mb|gb|tb)$/i;
+        
+        	function o(e, t) {
+        		if (!Number.isFinite(e)) return null;
+        		var n = Math.abs(e),
+        			i = t && t.thousandsSeparator || "",
+        			o = t && t.unitSeparator || "",
+        			l = t && void 0 !== t.decimalPlaces ? t.decimalPlaces : 2,
+        			u = Boolean(t && t.fixedDecimals),
+        			s = t && t.unit || "";
+        		s && a[s.toLowerCase()] || (s = n >= a.tb ? "TB" : n >= a.gb ? "GB" : n >= a.mb ? "MB" : n >= a.kb ? "KB" : "B");
+        		var c = (e / a[s.toLowerCase()]).toFixed(l);
+        		return u || (c = c.replace(d, "$1")), i && (c = c.replace(r, i)), c + o + s
+        	}
+        
+        	function l(e) {
+        		if ("number" == typeof e && !isNaN(e)) return e;
+        		if ("string" != typeof e) return null;
+        		var t, n = i.exec(e),
+        			r = "b";
+        		return n ? (t = parseFloat(n[1]), r = n[4].toLowerCase()) : (t = parseInt(e, 10), r = "b"), Math.floor(a[r] * t)
+        	}
         }]);
     </script>
 </body>
-
 </html>
