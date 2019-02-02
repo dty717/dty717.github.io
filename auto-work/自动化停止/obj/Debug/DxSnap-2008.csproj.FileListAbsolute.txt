@@ -1,0 +1,9 @@
+E:\Download\DirectShowSamples-2010-February\Samples\Capture\DxSnap\bin\Debug\SnapShot.exe
+E:\Download\DirectShowSamples-2010-February\Samples\Capture\DxSnap\bin\Debug\SnapShot.pdb
+E:\Download\DirectShowSamples-2010-February\Samples\Capture\DxSnap\bin\Debug\DirectShowLib.dll
+E:\Download\DirectShowSamples-2010-February\Samples\Capture\DxSnap\obj\Debug\DxSnap-2008.csprojResolveAssemblyReference.cache
+E:\Download\DirectShowSamples-2010-February\Samples\Capture\DxSnap\obj\Debug\SnapShot.Form1.resources
+E:\Download\DirectShowSamples-2010-February\Samples\Capture\DxSnap\obj\Debug\DxSnap-2008.csproj.GenerateResource.Cache
+E:\Download\DirectShowSamples-2010-February\Samples\Capture\DxSnap\obj\Debug\DxSnap-2008.csproj.CoreCompileInputs.cache
+E:\Download\DirectShowSamples-2010-February\Samples\Capture\DxSnap\obj\Debug\SnapShot.exe
+E:\Download\DirectShowSamples-2010-February\Samples\Capture\DxSnap\obj\Debug\SnapShot.pdb

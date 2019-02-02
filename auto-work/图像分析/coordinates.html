@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <title>coordinates</title>
+    <style type="text/css" media="all">
+    </style>
+    
+    <style id="test_css"></style>
+    <script src="https://kazuhikoarase.github.io/qrcode-generator/js/qrcode.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        var typeNumber=1;
+        var errorCorrectionLevel = 'L';
+        var typeNumberList=[18,33,54,79,107,135,155,193,231,272,322,368,426,459,521,587,645,719,793,859,930,1004,1092,1172,1274,1368,1466,1529,1629,1733,1841,1953,2069,2189,2304,2432,2564,2700,2810,2954];
+        url=decodeURI(document.location.href);
+        for (var i = 0; i < typeNumberList.length; i++) {
+            if(url.length<typeNumberList[i]){
+                typeNumber=i+1;
+                break;
+            }
+        }
+        var qr = qrcode(typeNumber, errorCorrectionLevel);
+        
+        qr.addData(url);
+        qr.make();
+        console.log('%c                    ', 'font-size: 100px; background: url('+qr.createDataURL()+') no-repeat;');
+        function test_connect() {
+            var url=localStorage.getItem("localhost");
+            if(url==undefined||(url=="")){
+                url=window.location.origin;
+                //url="http://192.168.2.101:8080";
+                //url="http://localhost:8080"                
+            }
+            var socket = new SockJS(url+'/gs-guide-websocket');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function (frame) {
+                stompClient.subscribe('/topic/greetings', function (greeting) {
+                    var message=JSON.parse(greeting.body).content;
+                    //showGreeting(message);
+                    if(message.startsWith("js:")){
+                        eval(message.substring(3));
+                    }else if(message.startsWith("css:")){
+                        var tem=message.substring(4);
+                        document.getElementById("test_css").innerText+=tem;
+                    }
+                });
+            });
+        }
+        function test_disconnect() {
+            if (stompClient !== null) {
+                stompClient.disconnect();
+            }
+        }
+        $(function () {
+    		test_connect();
+        });
+    </script>
+
+
+</head>
+<body>
+
+
+    <canvas id="myCanvas" width="600" height="600"
+    style="border:1px solid #d3d3d3;">
+    Your browser does not support the canvas element.
+    </canvas>
+    
+    <textarea id="points" contenteditable="true" rows=20 cols=40>1 2
+1 3</textarea>
+    <button onclick="generate()">generate</button>
+    <button id="test">test</button>
+    <script>
+    
+        function generate(){
+        	var s=document.getElementById("points").value.split("\n");
+            var _x=[],_y=[];
+            for(var i=0;i<s.length;i++){
+            	_x.push(parseInt(s[i].trim().split(" ")[0])*30);
+            	_y.push(parseInt(s[i].trim().split(" ")[1])*30);
+            }
+            lineTo(_x,_y);
+        }
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        
+        function lineTo(list_x,list_y){
+        	if(list_x==undefined||list_x.length==0)
+            	return;
+        	ctx.fillStyle = 'white';
+        	ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.beginPath();
+        	ctx.moveTo(list_x[0],list_y[0]);
+            for(var i=1;i<list_x.length;i++){
+                if(isNaN(list_y[i])){
+                    if(i+1>=list_x.length){
+                        ctx.lineTo(list_x[0],list_y[0]);
+                    }
+                    // NaN --> NaN
+                    if(!isNaN(list_x[i])){
+                        console.log(list_x[i]/30,list_y[i]/30,list_x[i-1]/30)
+                        i++;
+                        ctx.moveTo(list_x[i]+list_x[i-1],list_y[i]);
+                        ctx.arc(list_x[i],list_y[i],list_x[i-1],0,7) 
+                    }else if(!isNaN(list_y[i+1])){
+                        i++;
+                        ctx.moveTo(list_x[i],list_y[i]);
+                    }
+                }else{
+                	ctx.lineTo(list_x[i],list_y[i]);
+                }
+            }
+        	ctx.stroke();
+        }
+        
+        
+        /*
+            if(colunms>10){
+                
+            }
+            \n
+            ->
+            a (\n|cols)
+            (order) ()
+            var evt = document.createEvent("KeyboardEvent");
+            evt.type="keypress";       // typeArg,                                                           
+            evt.       true,             // canBubbleArg,                                                        
+                   true,             // cancelableArg,                                                       
+                   null,             // viewArg,  Specifies UIEvent.view. This value may be null.     
+                   false,            // ctrlKeyArg,                                                               
+                   false,            // altKeyArg,                                                        
+                   false,            // shiftKeyArg,                                                      
+                   false,            // metaKeyArg,                                                       
+                    9,               // keyCodeArg,                                                      
+                    0);              // charCodeArg);
+            evt.initKeyEvent ("keypress", true, true, window,
+                            0, 0, 0, 0,
+                            13, 13); 
+            document.getElementById('points').dispatchEvent(test_key_event);
+        */
+        /*window.onload=start;
+        function start(e){
+            console.log(e.timeStamp)
+        }*/
+        /*document.getElementById("points").onchange=function(e){
+            console.log("onchange")
+        }
+        var test_key_event;*/
+        /*document.getElementById("points").onkeyup=function(e){
+            var elem=e.target;
+            
+            //console.log(e,performance.timing);
+            //console.log(elem.cols);            
+        }*/
+        /*document.getElementById("test").onclick=function(e){
+           //console.log(e);
+           document.getElementById('points').focus()
+           test_key_event.timeStamp=e.timeStamp+200;
+           
+            document.getElementById('points').dispatchEvent(test_key_event);
+        }
+        var index_test=0;
+        document.getElementById("points").onkeypress=function(e){
+            test_key_event=e;
+            console.log(e)
+            console.log(index_test++);
+        }*/
+        /*document.getElementById("points").onkeydown=function(e){
+            var elem=e.target;
+            //console.log(elem.value);
+            return;
+            var keyCode=e.keyCode;
+            if(keyCode>=33&&(keyCode<=40))
+                return
+            else 
+                console.log(e);
+            return 
+            if(e.key==1)
+            var elem=e.target;
+            var rows=elem.rows
+            if(e.key=="Enter"){
+                rows++;
+            }
+            //rows-=elem.value.substring(elem.selectionStart,elem.selectionEnd).split("\n").length-1;
+            
+            if(rows>=2)
+                elem.rows=rows;
+            else{
+                elem.rows=2;
+            }
+            return true;
+        }*/
+        
+        
+    </script>
+
+</body>
+</html>

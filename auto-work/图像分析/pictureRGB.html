@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <style>
+        body {
+            display: -ms-flexbox;
+            display: -webkit-box;
+            display: flex;
+            -ms-flex-align: center;
+            -ms-flex-pack: center;
+            -webkit-box-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            justify-content: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #f5f5f5;
+        }
+
+        #tip {
+            position: absolute;
+            /* display: none; */
+        }
+
+        canvas {
+            cursor: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMDAwMDAwMEBAMFBQQFBQcGBgYGBwoHCAcIBwoPCgsKCgsKDw4QDQwNEA4YExERExgcGBYYHCIeHiIrKSs4OEv/wAALCAAFAAUBAREA/8QAMAABAAAAAAAAAAAAAAAAAAAABhAAAQIHAQAAAAAAAAAAAAAAAwQHAAECBQYREjL/2gAIAQEAAD8AMtU02WK8ud4IXevSUiW9UiKUVM+lNWyT7JsnqP/Z'), auto
+        }
+
+        ​
+    </style>
+    <title>Hello, world!</title>
+    
+    
+
+    
+    
+</head>
+
+<body>
+
+    <div class="card text-center " id='content'>
+        <canvas id="canvas"></canvas>
+        <span class="badge badge-primary" id="output"></span>
+        <div class="rgbShow" id="rgbShow">
+            &nbsp;&nbsp;&nbsp;
+        </div>
+    </div>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="similarColor.js"></script>
+    <script src="Close pair of points/closePoint.js"></script>
+    <script src="function/makeLine.js"></script>
+    <script src="function/LeastSquares.js"></script>
+    <script src="background/background.js"></script>
+
+    <script>
+
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+		
+		//var img2;
+        var img = new Image();
+        img.onload = function () {
+            //canvas.style.width=this.width
+            //canvas.style.height=this.height
+            document.getElementById('content').style.width = this.width + "px"
+            document.getElementById('content').style.height = this.height + "px"
+            canvas.width = this.width
+            canvas.height = this.height
+            ctx.drawImage(img, 0, 0);
+            /*
+                ctx.font="100px 宋体"
+                ctx.fillText("212的发生\r\n12当时的打翻",100,100)
+                ctx.fillText("212acSDS傅",300,400)
+            */
+			//img2=canvas.toDataURL("image/png");
+
+		};
+		
+        
+        img.crossOrigin = "Anonymous";
+        
+        //img.src="picture/20180824120113.jpg";
+        img.src ="https://dty717.github.io/auto-work/picture/20180824123623.jpg"
+        var similar;
+        $('canvas').click(function (e) {
+            return
+            if (!similar)
+                similar = new similarColor(pixelData[0], pixelData[1], pixelData[2]);
+            similar.closeArea(ctx, e.offsetX, e.offsetY);
+            //alert(event.offsetX + ',' + event.offsetY)
+        })
+        $('body').keypress(function (e) {
+            console.log(e);
+            if(e.key=="p"){
+                _function=backgroundFunction;
+            }else{
+                _function=similarColorFunction;
+            }
+			//test2(m1,m2,ctx)           
+        })
+        var _function
+        
+        var similarColorFunction=function(event,ctx){
+            var m1=event.offsetX;
+			var m2=event.offsetY;
+			test2(m1,m2,ctx)
+        };
+        var backgroundFunction=function(event,ctx){
+            //
+            backgroundFunctionColor(event,ctx)
+            //console.log(_function);
+        }
+        
+        
+        _function=backgroundFunction;
+        $('canvas').dblclick(function (e) {
+           /*  pixelData = ctx.getImageData(event.offsetX, event.offsetY, 1, 1).data;
+            leastred = new LeastSquares(event.offsetX, event.offsetY, pixelData[0]);
+            leastgreen = new LeastSquares(event.offsetX, event.offsetY, pixelData[1]);
+            leastblue= new LeastSquares(event.offsetX, event.offsetY, pixelData[2]);
+            var x1=event.offsetX-5;
+            var x2=event.offsetX+5;
+            var y1=event.offsetY-5;
+            var y2=event.offsetY+5;
+            
+            for (var i = x1; i < x2; i++) {
+                for (var j = y1; j < y2; j++) {
+                    var pixelData = ctx.getImageData(i, j, 1, 1).data;
+                    leastred.observe(i,j,pixelData[0])
+                    leastgreen.observe(i,j,pixelData[1])
+                    leastblue.observe(i,j,pixelData[2])
+                }
+            }
+            console.log(leastred.caculateM()*leastred.caculateM()+leastred.caculateN()*leastred.caculateN(),
+            leastgreen.caculateM()*leastgreen.caculateM()+leastgreen.caculateN()*leastgreen.caculateN(),
+            leastblue.caculateM()*leastblue.caculateM()+leastblue.caculateN()*leastblue.caculateN())
+             
+            if(leastred.caculateM()*leastred.caculateM()+leastred.caculateN()*leastred.caculateN()+
+                leastgreen.caculateM()*leastgreen.caculateM()+leastgreen.caculateN()*leastgreen.caculateN()+
+                leastblue.caculateM()*leastblue.caculateM()+leastblue.caculateN()*leastblue.caculateN()>20)
+                return;
+
+            ctx.fillRect(event.offsetX, event.offsetY, 1, 1);
+            return;
+            */
+			
+			_function(event,ctx);
+			
+			
+            return;
+            ctx.strokeStyle = '#ff0000';
+            ctx.beginPath();
+            ctx.moveTo(event.offsetX, event.offsetY);
+            ctx.lineTo(leastred.caculateM()*100+event.offsetX, event.offsetY+leastred.caculateN()*100);
+            ctx.stroke();
+            ctx.strokeStyle = 'green';
+            ctx.beginPath();
+            ctx.moveTo(event.offsetX, event.offsetY);
+            ctx.lineTo(leastgreen.caculateM()*100+event.offsetX, event.offsetY+leastgreen.caculateN()*100);
+            ctx.stroke();
+            ctx.strokeStyle = 'blue';
+            ctx.beginPath();
+            ctx.moveTo(event.offsetX, event.offsetY);
+            ctx.lineTo(leastblue.caculateM()*100+event.offsetX, event.offsetY+leastblue.caculateN()*100);
+            ctx.stroke();
+            //closePoint(event.offsetX, event.offsetY, ctx);
+
+        })
+        var pixelData;
+        $(function () {
+
+            $('canvas').mousemove(function (e) {
+
+                pixelData = ctx.getImageData(event.offsetX, event.offsetY, 1, 1).data;
+
+                $('#output').html('R: ' + pixelData[0] + '    G: ' + pixelData[1] + '    B: ' + pixelData[2] + '    A: ' + pixelData[3]);
+                $("#rgbShow").css("background-color", "rgb(" + pixelData[0] + "," + pixelData[1] + "," + pixelData[2] + ")");
+
+            });
+
+        });
+		function clone(obj) {
+			var copy;
+
+			// Handle the 3 simple types, and null or undefined
+			if (null == obj || "object" != typeof obj) return obj;
+
+			// Handle Date
+			if (obj instanceof Date) {
+				copy = new Date();
+				copy.setTime(obj.getTime());
+				return copy;
+			}
+
+			// Handle Array
+			if (obj instanceof Array) {
+				copy = [];
+				for (var i = 0, len = obj.length; i < len; i++) {
+					copy[i] = clone(obj[i]);
+				}
+				return copy;
+			}
+
+			// Handle Object
+			if (obj instanceof Object) {
+				copy = {};
+				for (var attr in obj) {
+					if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
+				}
+				return copy;
+			}
+
+			throw new Error("Unable to copy obj! Its type isn't supported.");
+		}
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <style>
+        body {
+            display: -ms-flexbox;
+            display: -webkit-box;
+            display: flex;
+            -ms-flex-align: center;
+            -ms-flex-pack: center;
+            -webkit-box-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            justify-content: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #f5f5f5;
+        }
+    </style>
+    <title>Hello, world!</title>
+</head>
+
+<body>
+
+    <div class="card text-center " style="width: 18rem;" id='content'>
+        <!-- <div class="card-header">
+            <h6>自动减线</h6>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">机器搬运</li>
+            <li class="list-group-item">机器固定</li>
+            <li class="list-group-item">机器定位</li>
+            <li class="list-group-item">机器剪裁</li>
+            <li class="list-group-item">&nbsp</li>
+        </ul>
+        
+        <div class="card-header">
+            <h6>自动拧螺丝</h6>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">机器搬运</li>
+            <li class="list-group-item">机器定位</li>
+            <li class="list-group-item">机器固定</li>
+            <li class="list-group-item">机器拼接</li>
+            <li class="list-group-item">&nbsp</li>
+            
+        </ul>
+        <div class="card-header">
+            <h6>自动接线</h6>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">(自动减线)</li>
+            <li class="list-group-item">机器搬运</li>
+            <li class="list-group-item">机器定位</li>
+            <li class="list-group-item">机器固定</li>
+            <li class="list-group-item">(自动拧螺丝)</li>
+            <li class="list-group-item">&nbsp</li>            
+        </ul> -->
+    </div>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script>
+        function addElement(title, elements) {
+            var str1 = '<div class="card-header  text-primary"><h6>';
+            var str2 = '</h6></div><ul class="list-group list-group-flush">'
+            var start1 = '<li class="list-group-item">';
+            var str = str1 + title + str2;
+            for (var i = 0; i < elements.length; i++) {
+                var element = elements[i];
+                str += start1 + elements[i] + '</li>'
+            }
+            str += '<li class="list-group-item">&nbsp</li></ul>'
+            return str;
+        }
+
+
+        $(document).ready(function () {
+            $.ajax({
+                url: "data.txt",
+                dataType: "text",
+                success: function (data) {
+                    $(".text").html(data);
+                }
+            });
+        });
+
+        //var elements = ['机器搬运', '机器定位', '机器固定', '机器拼接'];
+
+        var content = $('#content');
+        content.html(addElement('自动减线', ['机器搬运', '机器固定', '机器定位', '机器剪裁']));
+        content.append(addElement('自动拧螺丝', ['机器搬运', '机器定位', '机器固定', '机器拼接']));
+        content.append(addElement('自动接线', ['(自动减线)', '机器搬运', '机器定位', '机器固定', '(自动拧螺丝)']));
+
+    </script>
+</body>
+
+</html>
