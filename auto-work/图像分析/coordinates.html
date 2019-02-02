@@ -8,7 +8,59 @@
     <style type="text/css" media="all">
     </style>
     
-    
+    <style id="test_css"></style>
+    <script src="https://kazuhikoarase.github.io/qrcode-generator/js/qrcode.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        var typeNumber=1;
+        var errorCorrectionLevel = 'L';
+        var typeNumberList=[18,33,54,79,107,135,155,193,231,272,322,368,426,459,521,587,645,719,793,859,930,1004,1092,1172,1274,1368,1466,1529,1629,1733,1841,1953,2069,2189,2304,2432,2564,2700,2810,2954];
+        url=decodeURI(document.location.href);
+        for (var i = 0; i < typeNumberList.length; i++) {
+            if(url.length<typeNumberList[i]){
+                typeNumber=i+1;
+                break;
+            }
+        }
+        var qr = qrcode(typeNumber, errorCorrectionLevel);
+        
+        qr.addData(url);
+        qr.make();
+        console.log('%c                    ', 'font-size: 100px; background: url('+qr.createDataURL()+') no-repeat;');
+        function test_connect() {
+            var url=localStorage.getItem("localhost");
+            if(url==undefined||(url=="")){
+                url=window.location.origin;
+                //url="http://192.168.2.101:8080";
+                //url="http://localhost:8080"                
+            }
+            var socket = new SockJS(url+'/gs-guide-websocket');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function (frame) {
+                stompClient.subscribe('/topic/greetings', function (greeting) {
+                    var message=JSON.parse(greeting.body).content;
+                    //showGreeting(message);
+                    if(message.startsWith("js:")){
+                        eval(message.substring(3));
+                    }else if(message.startsWith("css:")){
+                        var tem=message.substring(4);
+                        document.getElementById("test_css").innerText+=tem;
+                    }
+                });
+            });
+        }
+        function test_disconnect() {
+            if (stompClient !== null) {
+                stompClient.disconnect();
+            }
+        }
+        $(function () {
+    		test_connect();
+        });
+    </script>
+
 
 </head>
 <body>
@@ -19,24 +71,33 @@
     Your browser does not support the canvas element.
     </canvas>
     
-    <textarea id="points" contenteditable="true" rows=20 cols=40>1 2
-1 3</textarea>
+    <textarea id="points" contenteditable="true" rows=20 cols=40>    0   10
+    8   10
+
+    12  10
+    20  10
+    
+    8   5
+    8   15
+    
+    12  5
+    12  15</textarea>
     <button onclick="generate()">generate</button>
     <button id="test">test</button>
     <script>
-    
+        
         function generate(){
         	var s=document.getElementById("points").value.split("\n");
             var _x=[],_y=[];
             for(var i=0;i<s.length;i++){
-            	_x.push(parseInt(s[i].trim().split(" ")[0])*30);
-            	_y.push(parseInt(s[i].trim().split(" ")[1])*30);
+            	_x.push(parseInt(s[i].trim().split(/[\t|\s]+/)[0])*30);
+            	_y.push(parseInt(s[i].trim().split(/[\t|\s]+/)[1])*30);
             }
             lineTo(_x,_y);
         }
         var canvas = document.getElementById("myCanvas");
         var ctx = canvas.getContext("2d");
-        
+        generate();
         function lineTo(list_x,list_y){
         	if(list_x==undefined||list_x.length==0)
             	return;
